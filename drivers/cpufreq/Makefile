@@ -21,8 +21,13 @@ obj-$(CONFIG_CPU_FREQ_GOV_BRAZILIANWAX) += cpufreq_brazilianwax.o
 obj-$(CONFIG_CPU_FREQ_GOV_LULZACTIVE)   += cpufreq_lulzactive.o
 obj-$(CONFIG_CPU_FREQ_GOV_SMARTASS2)    += cpufreq_smartass2.o
 obj-$(CONFIG_CPU_FREQ_GOV_BADASS)       += cpufreq_badass.o
+obj-$(CONFIG_CPU_FREQ_GOV_ABYSSPLUG)    += cpufreq_abyssplug.o
 obj-$(CONFIG_CPU_FREQ_GOV_ABYSSPLUG)    += cpufreq_abyssplugv2.o
-
+obj-$(CONFIG_CPU_FREQ_GOV_HYPER)        += cpufreq_HYPER.o
+obj-$(CONFIG_CPU_FREQ_GOV_SMARTASSH3)	+= cpufreq_smartassH3.o
+obj-$(CONFIG_CPU_FREQ_GOV_SavagedZen)   += cpufreq_savagedzen.o
+obj-$(CONFIG_CPU_FREQ_GOV_SLEEPY)       += cpufreq_sleepy.o
+obj-$(CONFIG_CPU_FREQ_GOV_DARKNESS)     += cpufreq_darkness.o
 
 
 # CPUfreq cross-arch helpers

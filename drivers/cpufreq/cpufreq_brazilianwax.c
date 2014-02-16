@@ -211,9 +211,9 @@ static void cpufreq_brazilianwax_timer(unsigned long data)
         if (this_brazilianwax->idle_exit_time == 0 || update_time == this_brazilianwax->idle_exit_time)
                 return;
 
-        delta_idle = (now_idle, this_brazilianwax->time_in_idle);
-        delta_time = (update_time, this_brazilianwax->idle_exit_time);
-        //printk(KERN_INFO "brazilianwaxT: t=%llu i=%llu\n",(update_time,this_brazilianwax->idle_exit_time),delta_idle);
+        delta_idle = cputime64_sub(now_idle, this_brazilianwax->time_in_idle);
+        delta_time = cputime64_sub(update_time, this_brazilianwax->idle_exit_time);
+        //printk(KERN_INFO "brazilianwaxT: t=%llu i=%llu\n",cputime64_sub(update_time,this_brazilianwax->idle_exit_time),delta_idle);
 
         // If timer ran less than 1ms after short-term sample started, retry.
         if (delta_time < 1000) {
@@ -237,7 +237,7 @@ static void cpufreq_brazilianwax_timer(unsigned long data)
         // at high loads)
         if ((cpu_load > max_cpu_load || delta_idle == 0) &&
             !(policy->cur > this_brazilianwax->max_speed &&
-             (update_time, this_brazilianwax->freq_change_time) > 100*down_rate_us)) {
+              cputime64_sub(update_time, this_brazilianwax->freq_change_time) > 100*down_rate_us)) {
 
                 if (policy->cur > this_brazilianwax->max_speed) {
                         reset_timer(data,this_brazilianwax);
@@ -254,7 +254,7 @@ static void cpufreq_brazilianwax_timer(unsigned long data)
 		// minimize going above 1.8Ghz
 		if (policy->cur > up_min_freq) new_rate = 75000;
 
-                if ((update_time, this_brazilianwax->freq_change_time) < new_rate) 
+                if (cputime64_sub(update_time, this_brazilianwax->freq_change_time) < new_rate) 
                         return;
 
                 this_brazilianwax->force_ramp_up = 1;
@@ -280,7 +280,7 @@ static void cpufreq_brazilianwax_timer(unsigned long data)
          * Do not scale down unless we have been at this frequency for the
          * minimum sample time.
          */
-        if ((update_time, this_brazilianwax->freq_change_time) < down_rate_us)
+        if (cputime64_sub(update_time, this_brazilianwax->freq_change_time) < down_rate_us)
                 return;
 
         cpumask_set_cpu(data, &work_cpumask);
