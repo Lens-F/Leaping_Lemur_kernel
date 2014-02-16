@@ -2559,4 +2559,3 @@ static struct platform_driver ehci_msm_hsic_driver = {
 #endif
 	},
 };
-
